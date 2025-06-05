@@ -1,0 +1,407 @@
+:root {
+    --primary: #4D148C;
+    --secondary: #FF6600;
+    --light: #F5F5F5;
+    --dark: #333333;
+    --white: #FFFFFF;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    user-select: none;
+}
+
+body {
+    background-color: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* aqui é para personalizar o fundo da barra, neste caso estou colocando um fundo cinza escuro*/
+::-webkit-scrollbar-track {
+  background: var(--dark);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--white);
+  border-radius: 15px;
+}
+
+header {
+    background-color: var(--white);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    margin-bottom: 20px;
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#logo-ceap {
+    height: 60px;
+    width: auto;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    padding: 12px 25px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-weight: 600;
+    color: var(--dark);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+}
+
+.tab-button:hover {
+    color: var(--secondary);
+}
+
+.tab-button.active {
+    color: var(--primary);
+}
+
+.tab-button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: var(--secondary);
+    transition: var(--transition);
+}
+
+.tab-button.active::after {
+    width: 80%;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.5s forwards;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* SISTEMA DE FILTROS */
+.filter-system {
+    background: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.filter-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.filter-title {
+    text-align: center;
+    margin-bottom: 15px;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.filter-btn {
+    padding: 8px 20px;
+    border: 2px solid var(--primary);
+    border-radius: 20px;
+    background: transparent;
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+/* CARDS DE JOGADORES */
+.players-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.course-section {
+    background: var(--white);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.course-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    background: linear-gradient(90deg, var(--primary), #3a0d6d);
+    color: white;
+}
+
+.course-title {
+    font-size: 1.3rem;
+    margin-left: 10px;
+}
+
+.players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.player-card {
+    background: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.player-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.player-image {
+    height: 200px;
+    background-color: #eee;
+    background-size: cover;
+    background-position: center;
+}
+
+.player-info {
+    padding: 15px;
+}
+
+.player-stats {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.player-stats .stat {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.player-stats .stat i {
+    font-size: 10px;
+}
+
+/* Cores específicas */
+.player-stats .stat:nth-child(1) {
+    /* Gols */
+    color: #00c853;
+    background: rgba(0, 200, 83, 0.1);
+}
+
+.player-stats .stat:nth-child(2) {
+    /* Assistências */
+    color: #2979ff;
+    background: rgba(41, 121, 255, 0.1);
+}
+
+.player-stats .stat:nth-child(3) {
+    /* Amarelos */
+    color: #ffd600;
+    background: rgba(255, 214, 0, 0.1);
+}
+
+.player-stats .stat:nth-child(4) {
+    /* Vermelhos */
+    color: #ff1744;
+    background: rgba(255, 23, 68, 0.1);
+}
+
+.player-name {
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 5px;
+}
+
+.player-sport {
+    display: inline-block;
+    padding: 4px 10px;
+    background-color: var(--secondary);
+    color: white;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* OUTRAS SEÇÕES */
+.games-list,
+.champions-grid {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ESTATÍSTICAS */
+.stats-container {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.stats-tabs {
+    display: flex;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 20px;
+}
+
+.stats-tab {
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--dark);
+}
+
+.stats-tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--secondary);
+}
+
+.stats-table {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.stats-table.active {
+    display: block;
+}
+
+.stats-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.stats-table th {
+    background-color: var(--primary);
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.stats-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.stats-table tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.top-goal {
+    color: #00c853;
+    font-weight: bold;
+}
+
+.top-assist {
+    color: #2979ff;
+    font-weight: bold;
+}
+
+.top-card {
+    color: #ff6d00;
+    font-weight: bold;
+}
+
+footer {
+    background: linear-gradient(135deg, var(--primary), #3a0d6d);
+    color: var(--white);
+    text-align: center;
+    padding: 25px 0;
+    margin-top: 50px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .players-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stats-tabs {
+        flex-direction: column;
+    }
+}
