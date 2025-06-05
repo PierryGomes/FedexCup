@@ -1,0 +1,129 @@
+/* Estilos Gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    background-color: #1a3e72; /* Azul do CEAP - ajustar conforme necessário */
+    color: white;
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* ESTILOS PARA O LOGO - ADICIONE ISSO AO SEU CSS */
+.logo-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.logo-ceap-link {
+    display: inline-block;
+    height: 60px;
+    transition: transform 0.3s ease;
+}
+
+.logo-ceap-link:hover {
+    transform: scale(1.03);
+}
+
+#logo-ceap {
+    height: 100%;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+    .logo-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .logo-ceap-link {
+        height: 50px;
+    }
+    
+    #logo-ceap {
+        max-width: 150px;
+    }
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    width: 200px;
+    z-index: 101;
+    color: #333;
+}
+
+.dropdown-menu h3 {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* ESTILOS DAS ESTATÍSTICAS DOS JOGADORES */
+.player-stats {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.player-stats .stat {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: bold;
+}
+
+.player-stats .goal {
+    background-color: rgba(0, 200, 83, 0.2);
+    color: #00c853;
+}
+
+.player-stats .assist {
+    background-color: rgba(41, 121, 255, 0.2);
+    color: #2979ff;
+}
+
+.player-stats .yellow-card {
+    background-color: rgba(255, 213, 0, 0.3);
+    color: #ffd500;
+}
+
+.player-stats .red-card {
+    background-color: rgba(255, 0, 0, 0.2);
+    color: #ff0000;
+}
+
+/* Efeito hover opcional */
+.player-card:hover .player-stats .stat {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}

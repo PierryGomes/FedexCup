@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interclasse CEAP 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4D148C;
+            --secondary: #FF6600;
+            --light: #F5F5F5;
+            --dark: #333333;
+            --white: #FFFFFF;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            margin-bottom: 20px;
+        }
+        
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        #logo-ceap {
+            height: 60px;
+            width: auto;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 20px;
+        }
+        
+        .tab-button {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            color: var(--dark);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .tab-button:hover {
+            color: var(--secondary);
+        }
+        
+        .tab-button.active {
+            color: var(--primary);
+        }
+        
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .tab-button.active::after {
+            width: 80%;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s forwards;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* SISTEMA DE FILTROS */
+        .filter-system {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .filter-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .filter-title {
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .filter-btn {
+            padding: 8px 20px;
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            background: transparent;
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* CARDS DE JOGADORES */
+        .players-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .course-section {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .course-header {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            background: linear-gradient(90deg, var(--primary), #3a0d6d);
+            color: white;
+        }
+        
+        .course-title {
+            font-size: 1.3rem;
+            margin-left: 10px;
+        }
+        
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .player-card {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+        
+        .player-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .player-image {
+            height: 200px;
+            background-color: #eee;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .player-info {
+            padding: 15px;
+        }
+        
+        .player-stats {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .player-stats .stat {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: bold;
+            background: rgba(0,0,0,0.05);
+        }
+
+        .player-stats .stat i {
+            font-size: 10px;
+        }
+
+        /* Cores específicas */
+        .player-stats .stat:nth-child(1) { /* Gols */
+            color: #00c853;
+            background: rgba(0, 200, 83, 0.1);
+        }
+
+        .player-stats .stat:nth-child(2) { /* Assistências */
+            color: #2979ff;
+            background: rgba(41, 121, 255, 0.1);
+        }
+
+        .player-stats .stat:nth-child(3) { /* Amarelos */
+            color: #ffd600;
+            background: rgba(255, 214, 0, 0.1);
+        }
+
+        .player-stats .stat:nth-child(4) { /* Vermelhos */
+            color: #ff1744;
+            background: rgba(255, 23, 68, 0.1);
+        }
+        
+        .player-name {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .player-sport {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: var(--secondary);
+            color: white;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        /* OUTRAS SEÇÕES */
+        .games-list, .champions-grid {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* ESTATÍSTICAS */
+        .stats-container {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .stats-tabs {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .stats-tab {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--dark);
+        }
+
+        .stats-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--secondary);
+        }
+
+        .stats-table {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .stats-table.active {
+            display: block;
+        }
+
+        .stats-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .stats-table th {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .stats-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stats-table tr:nth-child(even) {
+            background-color: rgba(0,0,0,0.03);
+        }
+
+        .top-goal {
+            color: #00c853;
+            font-weight: bold;
+        }
+
+        .top-assist {
+            color: #2979ff;
+            font-weight: bold;
+        }
+
+        .top-card {
+            color: #ff6d00;
+            font-weight: bold;
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--primary), #3a0d6d);
+            color: var(--white);
+            text-align: center;
+            padding: 25px 0;
+            margin-top: 50px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .players-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stats-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo-wrapper">
+                <img src="images/jogadores/logo_ceap.jpg" alt="CEAP" id="logo-ceap">
+                <h1>FedEx Cup <span>2025</span></h1>
+            </div>
+        </div>
+        
+        <nav class="tabs">
+    <button class="tab-button active" data-tab="jogadores">
+        <i class="fas fa-users"></i> Jogadores
+    </button>
+    <button class="tab-button" data-tab="jogos">
+        <i class="fas fa-calendar-alt"></i> Jogos
+    </button>
+    <button class="tab-button" data-tab="chaveamento">
+        <i class="fas fa-sitemap"></i> Chaveamento
+    </button>
+    <button class="tab-button" data-tab="campeoes">
+        <i class="fas fa-trophy"></i> Campeões
+    </button>
+    <button class="tab-button" data-tab="estatisticas">
+        <i class="fas fa-chart-bar"></i> Estatísticas
+    </button>
+</nav>
+
+    <main>
+        <section id="jogadores" class="tab-content active">
+            <div class="filter-system">
+                <h3 class="filter-title">Filtrar Turmas</h3>
+                
+                <div class="filter-row">
+                    <button class="filter-btn" data-year="1">1</button>
+                    <button class="filter-btn" data-year="2">2</button>
+                    <button class="filter-btn" data-year="3">3</button>
+                    <button class="filter-btn" data-year="4">4</button>
+                </div>
+                
+                <div class="filter-row">
+                    <button class="filter-btn" data-course="sat">SAT</button>
+                    <button class="filter-btn" data-course="sit">SIT</button>
+                    <button class="filter-btn" data-course="srt">SRT</button>
+                    <button class="filter-btn" data-course="spt">SPT</button>
+                </div>
+            </div>
+            
+            <div class="players-container" id="players-container">
+                <!-- As turmas serão inseridas via JavaScript -->
+            </div>
+        </section>
+
+        <section id="jogos" class="tab-content">
+            <h2>Jogos e Resultados</h2>
+            <div class="games-list" id="games-container">
+                <!-- Conteúdo será preenchido via JavaScript -->
+            </div>
+        </section>
+
+        <section id="campeoes" class="tab-content">
+            <h2>Campeões</h2>
+            <div class="champions-grid" id="champions-container">
+                <!-- Conteúdo será preenchido via JavaScript -->
+            </div>
+        </section>
+        
+        <section id="estatisticas" class="tab-content">
+            <h2>Estatísticas</h2>
+            <div class="stats-container">
+                <div class="stats-tabs">
+                    <button class="stats-tab active" data-stat="artilharia">Artilharia</button>
+                    <button class="stats-tab" data-stat="assistencias">Assistências</button>
+                    <button class="stats-tab" data-stat="cartoes">Cartões</button>
+                </div>
+                
+                <div id="artilharia" class="stats-table active">
+                    <!-- Preenchido via JavaScript -->
+                </div>
+                
+                <div id="assistencias" class="stats-table">
+                    <!-- Preenchido via JavaScript -->
+                </div>
+                
+                <div id="cartoes" class="stats-table">
+                    <!-- Preenchido via JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Interclasse CEAP © <span id="footer-year">2025</span></p>
+    </footer>
+
+    <script>
+        // DADOS DOS JOGADORES ORGANIZADOS POR TURMA
+        const playersData = {
+            "1sat": [
+                {name: "Jogador 1 SAT", sport: "futebol", image: "images/jogadores/1sat/jogador1.jpg"},
+                {name: "Jogador 2 SAT", sport: "futebol", image: "images/jogadores/1sat/jogador2.jpg"}
+            ],
+            "1sit": [
+                {name: "Jogador 1 SIT", sport: "futebol", image: "images/jogadores/1sit/jogador1.jpg"}
+            ],
+            "1srt": [
+                {name: "Jogador 1 SRT", sport: "futebol", image: "images/jogadores/1srt/jogador1.jpg"}
+            ],
+            "2sat": [
+               {name: "Rodrigo Nascimento", sport: "Futebol", image: "images/jogadores/RODRIGO.jpg", team: "2 SAT"},
+               {name: "Pedro Tavares", sport: "Futebol", image: "images/jogadores/TAVARES.jpg", team: "2 SAT"},
+               {name: "Pedro Silva", sport: "Futebol", image: "images/jogadores/PEDRO.jpg", team: "2 SAT"},
+               {name: "Gustavo Aguiar", sport: "Futebol", image: "images/jogadores/AGUIAR.jpg", team: "2 SAT"},
+               {name: "Pierry Gomes", sport: "Futebol", image: "images/jogadores/PIERRY.jpg", team: "2 SAT"},
+               {name: "Esdras Jr", sport: "Futebol", image: "images/jogadores/EDRAS.jpg", team: "2 SAT"},
+               {name: "Cauã Moraes", sport: "Futebol", image: "images/jogadores/Cauã.jpg", team: "2 SAT"},
+               {name: "Henrique Guimarães", sport: "Futebol", image: "images/jogadores/HENRIQUE.jpg", team: "2 SAT"},
+               {name: "Mateus Magalhães", sport: "Futebol", image: "images/jogadores/MAGALHÃES.jpg", team: "2 SAT"},
+               {name: "Lucas Nogueira", sport: "Futebol", team: "2 SAT"}
+            ],
+            "2sit": [
+                {name: "Jogador 2 SIT", sport: "futebol", image: "images/jogadores/2sit/jogador1.jpg"}
+            ],
+            "2srt": [
+                {name: "João Davi", sport: "futebol", image: "images/jogadores/JOÃO DAVI.jpg"}
+            ],  
+            "2spt": [
+                {name: "Jogador 2 SPT", sport: "futebol", image: "images/jogadores/2spt/jogador1.jpg"}
+            ],
+            "3sat": [
+                {name: "Pedro Sant'ana", sport: "Futebol", image: "images/jogadores/PEDRO SANTANA.jpg", team: "3 SAT"},
+                {name: "Emanuel Felipe", sport: "Futebol", image: "images/jogadores/EMANUEL.jpg", team: "3 SAT"},
+                {name: "Kauan Jesus", sport: "Futebol", image: "images/jogadores/KAUAN JESUS.jpg", team: "3 SAT"},
+                {name: "Otavio Taieti", sport: "Futebol", image: "images/jogadores/TAIETI.jpg", team: "3 SAT"},
+                {name: "Mateus Jimenes", sport: "Futebol", image: "images/jogadores/JIMENES.jpg", team: "3 SAT"},
+                {name: "Nicolas Mendes", sport: "Futebol", image: "images/jogadores/MENDES.jpg", team: "3 SAT"},
+                {name: "Guilherme Oliveira", sport: "Futebol", image: "images/jogadores/GUILHERME.jpg", team: "3 SAT"},
+                {name: "Arthur Braz", sport: "Futebol", image: "images/jogadores/BRÁZ.jpg", team: "3 SAT"},
+                {name: "Kayky Ambrozio", sport: "Futebol", image: "images/jogadores/Kayky.jpg", team: "3 SAT"},
+                {name: "Ryan Henrique", sport: "Futebol", team: "3 SAT"}
+            ],
+            "3srt": [
+                {name: "Jogador 3 SRT", sport: "futebol", image: "images/jogadores/3srt/jogador1.jpg"}
+            ],
+            "3spt": [
+                {name: "Jogador 3 SPT", sport: "futebol", image: "images/jogadores/3spt/jogador1.jpg"}
+            ],
+            "4sat": [
+                {name: "Jogador 4 SAT", sport: "futebol", image: "images/jogadores/4sat/jogador1.jpg"}
+            ],
+            "4srt": [
+                {name: "Jogador 4 SRT", sport: "futebol", image: "images/jogadores/4srt/jogador1.jpg"}
+            ]
+        };
+
+        const playerStats = {
+            "Rodrigo Nascimento": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Pedro Tavares": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Pierry Gomes": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Pedro Silva": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Gustavo Aguiar": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Esdras Jr": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Cauã Moraes": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Henrique Guimarães": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Mateus Magalhães": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Nicolas Mendes": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Guilherme Oliveira": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Arthur Braz": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Kayky Ambrozio": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Pedro Sant'ana": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Emanuel Felipe": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Kauan Jesus": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Otavio Taieti": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Mateus Jimenes": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+            "Ryan Henrique": { goals: 0, assists: 0, yellowCards: 0, redCards: 0 }
+        };
+
+        // FUNÇÃO PARA CARREGAR JOGADORES COM FILTROS E ESTATÍSTICAS
+        function loadPlayers(yearFilter = 'all', courseFilter = 'all') {
+            const container = document.getElementById('players-container');
+            container.innerHTML = '';
+            
+            for (const [turma, jogadores] of Object.entries(playersData)) {
+                const ano = turma.substring(0,1);
+                const curso = turma.substring(1);
+                
+                // Aplica filtros
+                if ((yearFilter === 'all' || ano === yearFilter) && 
+                    (courseFilter === 'all' || curso === courseFilter)) {
+                    
+                    // Cria seção da turma
+                    const section = document.createElement('div');
+                    section.className = 'course-section';
+                    
+                    // Cria cabeçalho
+                    const header = document.createElement('div');
+                    header.className = 'course-header';
+                    header.innerHTML = `
+                        <i class="fas fa-users"></i>
+                        <h3 class="course-title">${ano}º ${curso.toUpperCase()}</h3>
+                    `;
+                    
+                    // Cria grid de jogadores
+                    const grid = document.createElement('div');
+                    grid.className = 'players-grid';
+                    
+                    // Adiciona jogadores
+                    jogadores.forEach(jogador => {
+                        const stats = playerStats[jogador.name] || { goals: 0, assists: 0, yellowCards: 0, redCards: 0 };
+                        
+                        const card = document.createElement('div');
+                        card.className = 'player-card';
+                        card.innerHTML = `
+                            <div class="player-image" style="background-image: url('${jogador.image}')"></div>
+                            <div class="player-info">
+                                <h3 class="player-name">${jogador.name}</h3>
+                                <span class="player-sport">${jogador.sport}</span>
+                                <div class="player-stats">
+                                    <span class="stat" title="Gols"><i class="fas fa-futbol"></i> ${stats.goals}</span>
+                                    <span class="stat" title="Assistências"><i class="fas fa-hands-helping"></i> ${stats.assists}</span>
+                                    <span class="stat" title="Cartões Amarelos"><i class="fas fa-square"></i> ${stats.yellowCards}</span>
+                                    <span class="stat" title="Cartões Vermelhos"><i class="fas fa-square"></i> ${stats.redCards}</span>
+                                </div>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    });
+                    
+                    // Monta a seção
+                    section.appendChild(header);
+                    section.appendChild(grid);
+                    container.appendChild(section);
+                }
+            }
+        }
+
+        // FUNÇÃO PARA CARREGAR ESTATÍSTICAS
+        function loadStats() {
+            // Converter playerStats em array e ordenar
+            const statsArray = Object.entries(playerStats).map(([name, stats]) => ({
+                name,
+                ...stats,
+                team: playersData['2sat'].some(p => p.name === name) ? '2 SAT' : 
+                      playersData['3sat'].some(p => p.name === name) ? '3 SAT' : 'Outros'
+            }));
+
+            // Artilharia (Gols)
+            const artilharia = document.getElementById('artilharia');
+            artilharia.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Posição</th>
+                            <th>Jogador</th>
+                            <th>Turma</th>
+                            <th>Gols</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${statsArray
+                            .sort((a, b) => b.goals - a.goals)
+                            .map((player, index) => `
+                            <tr>
+                                <td>${index + 1}º</td>
+                                <td>${player.name}</td>
+                                <td>${player.team}</td>
+                                <td class="${index === 0 ? 'top-goal' : ''}">${player.goals}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            // Assistências
+            const assistencias = document.getElementById('assistencias');
+            assistencias.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Posição</th>
+                            <th>Jogador</th>
+                            <th>Turma</th>
+                            <th>Assistências</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${statsArray
+                            .sort((a, b) => b.assists - a.assists)
+                            .map((player, index) => `
+                            <tr>
+                                <td>${index + 1}º</td>
+                                <td>${player.name}</td>
+                                <td>${player.team}</td>
+                                <td class="${index === 0 ? 'top-assist' : ''}">${player.assists}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            // Cartões
+            const cartoes = document.getElementById('cartoes');
+            cartoes.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Jogador</th>
+                            <th>Turma</th>
+                            <th>Amarelos</th>
+                            <th>Vermelhos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${statsArray
+                            .sort((a, b) => (b.yellowCards + b.redCards) - (a.yellowCards + a.redCards))
+                            .map(player => `
+                            <tr>
+                                <td>${player.name}</td>
+                                <td>${player.team}</td>
+                                <td>${player.yellowCards}</td>
+                                <td>${player.redCards}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        // INICIALIZAÇÃO
+        document.addEventListener('DOMContentLoaded', function() {
+            // Atualiza ano no footer
+            document.getElementById('footer-year').textContent = new Date().getFullYear();
+            
+            // Sistema de abas
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // Se for a aba de estatísticas, carrega os dados
+                    if (tabId === 'estatisticas') {
+                        loadStats();
+                    }
+                });
+            });
+            
+            // Filtros
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filterType = this.hasAttribute('data-year') ? 'year' : 'course';
+                    
+                    // Ativa o botão clicado
+                    document.querySelectorAll(`.filter-btn[data-${filterType}]`).forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Obtém filtros ativos
+                    const year = document.querySelector('.filter-btn[data-year].active')?.getAttribute('data-year') || 'all';
+                    const course = document.querySelector('.filter-btn[data-course].active')?.getAttribute('data-course') || 'all';
+                    
+                    // Aplica filtros
+                    loadPlayers(year, course);
+                });
+            });
+            
+            // Tabs de estatísticas
+            document.querySelectorAll('.stats-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.stats-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.stats-table').forEach(t => t.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    const statId = this.getAttribute('data-stat');
+                    document.getElementById(statId).classList.add('active');
+                });
+            });
+            
+            // Carrega todos os jogadores inicialmente
+            loadPlayers();
+        });
+    </script>
+</body>
+</html>
